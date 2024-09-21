@@ -29,7 +29,8 @@ Example 1: Predicting harassment onto a dataframe of GPS locations of caribou.
 4. Manipulate Rasters
      - Soil Moisture: using the aggregate multidimensional raster tool in the multidimension tools toolbox, calculate the mean soil moisture for each summer (we used 05/01 trhough 08/31), 
        this will be your soil moisture covariate for prediciting mosquito harassment.
-     - Growing Degree Day: First using the minus tool from the spatial analyst tools toolbox, subtract 273.15 from the temperature raster to convert the units from kelvin to celsius. Then        using the aggregate multidimensional raster tool in the multidimension tools toolbox, create two new rasters from the temperature raster. The first will be aggregating over 24             hours using an aggregation definition of minimum to find the daily minimum temperature. The the second will be aggregating over 24 hours using an aggregation definition of maximum         to find the daily maximum temperature. Then you will calculate growing degree day with a base temperature of 0, this is done by subtracting the minimum daily temperature from the          maximum daily temperature and dividing by 2. This can be done using the python code provided below:
+     - Snow Depth: Using the aggregate multidimensional
+     - Growing Degree Day: First using the minus tool from the spatial analyst toolbox, subtract 273.15 from the temperature raster to convert the units from kelvin to celsius. Then        using the aggregate multidimensional raster tool in the multidimension tools toolbox, create two new rasters from the temperature raster. The first will be aggregating over 24             hours using an aggregation definition of minimum to find the daily minimum temperature. The the second will be aggregating over 24 hours using an aggregation definition of maximum         to find the daily maximum temperature. Then you will calculate growing degree day with a base temperature of 0, this is done by subtracting the minimum daily temperature from the          maximum daily temperature and dividing by 2. This can be done using the python code provided below:
 
                from arcpy.sa import Raster, RasterCalculator
        
@@ -86,6 +87,8 @@ Example 1: Predicting harassment onto a dataframe of GPS locations of caribou.
     - To sample cumulative GDD again run the sampling parameters described above after inputting the GDD raster setting the end field or value as you date time start
       column and change the statistic type to sum. Append the resulting dataframe to your original dataset as a column called "cumGDD".
     - To sample soil moisture, again run the same sampling parameters described for the temperature and wind covariates after inputting the aggragated soil moisture raster and setting.
+      Append the resulting dataframe to your original dataset as a column called "soilmoisture".
+    - To sample soil moisture, again run the same sampling parameters described for the temperature and wind covariates after inputting the snow depth raster and setting.
       Append the resulting dataframe to your original dataset as a column called "soilmoisture".
       
 
