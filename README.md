@@ -1,6 +1,18 @@
 # Arctic_Insect_Harassment_Models
 Repository containing mosquito and oestrid fly harassment models and instructions for their use in calculating the CHT insect indices described in Hein et al., 2025.
 
+Mosquito Model:
+temperature
+wind speed
+2 week sum of precipitation
+days since snow melt
+topographic position index
+soil moisture
+
+Oestrid Model:
+temperature
+cumulative growing degree day
+
 Attached in this repository are the the .rds files containing the mosquito and oestrid fly models descridbed in Hein et al., 2025. These models can be used to predict insect harassment by mosquitoes and oestrid fly harassment in arctic ecosystems remotely using a trusted DSM and open source ERA5 land weather model variables. We describe the process to do so below:
 
 Example 1: Predicting harassment onto a dataframe of GPS locations of caribou.
