@@ -102,6 +102,7 @@ index_start_date_hourly <- as.POSIXct("2018-06-01 00:00", tz = "UTC")
 index_end_date_hourly <- as.POSIXct("2018-08-31 23:00", tz = "UTC")
 end_date <- as.POSIXct("2018-08-31 23:00", tz = "UTC")
 snow_melt_end <- as.POSIXct("2018-07-31 23:00", tz = "UTC")
+snow_start_date <- as.POSIXct(paste0(year, "-05-01 00:00"), tz = "UTC")
 precipitation_start <- as.POSIXct("2018-04-01 00:00", tz = "UTC")
 
 
@@ -111,31 +112,43 @@ precipitation_start <- as.POSIXct("2018-04-01 00:00", tz = "UTC")
 ###############
 # Define request parameters
 request <- list(
-  dataset_short_name = "reanalysis-era5-single-levels",
-  product_type = "reanalysis",
-  variable = "2m_temperature",
-  year = year,
-  month = months,
-  day = days,  
-  time = times, 
-  area = area, 
-  format = "netcdf",
-  target = "era5_2m_temperature_2018.nc"
-)
-
-# Request data from ERA5
-file_path <- wf_request(
-  request = request,
-  transfer = TRUE,   
-  path = "."         
-)
-
-# Load the NetCDF temperature raster file
-temp_raw <- rast("era5_2m_temperature_2018.nc")
-
-# Define the time frame of the raster
-time_points <- seq(from = start_date, to = end_date, by = "hour")
-terra::time(temp_raw) <- time_points
+    dataset_short_name = "reanalysis-era5-land",
+    product_type = "reanalysis",
+    variable = "2m_temperature",
+    year = year,
+    month = months,
+    day = days,  
+    time = times, 
+    area = area, 
+    format = "netcdf",
+    target = paste0("era5_2m_temperature_land_", year, ".nc")
+  )
+  
+  file_path <- wf_request(
+    request = request,
+    transfer = TRUE,  
+    path = output_dir         
+  )
+  
+  #unzip the file
+  nc_file <- paste0("era5_2m_temperature_land_", year, ".nc")
+  zip_file <- paste0("era5_2m_temperature_land_", year,".zip")
+  
+  if (!file.exists(nc_file)) {
+    # Unzip and get the list of extracted files
+    files <- unzip(zip_file, exdir = ".")
+    # Rename the first extracted file to your desired name if needed
+    if (basename(files[1]) != nc_file) {
+      file.rename(files[1], nc_file)
+    }
+  }
+  
+  # Load the NetCDF file
+  temp_raw <- rast(nc_file)
+  
+  # Define the time sequence
+  time_points <- seq(from = start_date, to = end_date, by = "hour")
+  terra::time(temp_raw) <- time_points
 
 
 # Repeat to download code for other covariates:
@@ -143,144 +156,218 @@ terra::time(temp_raw) <- time_points
 # Download U component of wind raster
 ###############
 request <- list(
-  dataset_short_name = "reanalysis-era5-single-levels",
-  product_type = "reanalysis",
-  variable = "10m_u_component_of_wind",
-  year = year,
-  month = months,
-  day = days,  
-  time = times, 
-  area = area, 
-  format = "netcdf",
-  target = "era5_10m_u_wind_2018.nc"
-)
-
-file_path <- wf_request(
-  request = request,
-  transfer = TRUE,   
-  path = "."         
-)
-
-wind_u_raw <- rast("era5_10m_u_wind_2018.nc")
-
-time_points <- seq(from = start_date, to = end_date, by = "hour")
-
-terra::time(wind_u_raw) <- time_points
-
+    dataset_short_name = "reanalysis-era5-land",
+    product_type = "reanalysis",
+    variable = "10m_u_component_of_wind",
+    year = year,
+    month = months,
+    day = days,  
+    time = times, 
+    area = area, 
+    format = "netcdf",
+    target = paste0("era5_10m_u_wind_land_", year, ".nc")
+  )
+  
+  file_path <- wf_request(
+    request = request,
+    transfer = TRUE,   
+    path = "."         
+  )
+  
+  #unzip the file
+  nc_file <- paste0("era5_10m_u_wind_land_", year, ".nc")
+  zip_file <- paste0("era5_10m_u_wind_land_", year,".zip")
+  
+  if (!file.exists(nc_file)) {
+    # Unzip and get the list of extracted files
+    files <- unzip(zip_file, exdir = ".")
+    # Rename the first extracted file to your desired name if needed
+    if (basename(files[1]) != nc_file) {
+      file.rename(files[1], nc_file)
+    }
+  }
+  
+  # Load the NetCDF file
+  wind_u_raw <- rast(nc_file)
+  
+  
+  # Define the time sequence
+  time_points <- seq(from = start_date, to = end_date, by = "hour")
+  terra::time(wind_u_raw) <- time_points
 
 ################
 # Download V component of wind raster
 ###############
-request <- list(
-  dataset_short_name = "reanalysis-era5-single-levels",
-  product_type = "reanalysis",
-  variable = "10m_v_component_of_wind",
-  year = year,
-  month = months,
-  day = days,  
-  time = times, 
-  area = area, 
-  format = "netcdf",
-  target = "era5_10m_v_wind_2018.nc"
-)
-
-file_path <- wf_request(
-  request = request,
-  transfer = TRUE,   
-  path = "."         
-)
-
-wind_v_raw <- rast("era5_10m_v_wind_2018.nc")
-
-time_points <- seq(from = start_date, to = end_date, by = "hour")
-
-terra::time(wind_v_raw) <- time_points
+  request <- list(
+    dataset_short_name = "reanalysis-era5-land",
+    product_type = "reanalysis",
+    variable = "10m_v_component_of_wind",
+    year = year,
+    month = months,
+    day = days,  
+    time = times, 
+    area = area, 
+    format = "netcdf",
+    target = paste0("era5_10m_v_wind_land_", year, ".nc")
+  )
+  
+  file_path <- wf_request(
+    request = request,
+    transfer = TRUE,  
+    path = "."         
+  )
+  
+  #unzip the file
+  nc_file <- paste0("era5_10m_v_wind_land_", year, ".nc")
+  zip_file <- paste0("era5_10m_v_wind_land_", year,".zip")
+  
+  if (!file.exists(nc_file)) {
+    # Unzip and get the list of extracted files
+    files <- unzip(zip_file, exdir = ".")
+    # Rename the first extracted file to your desired name if needed
+    if (basename(files[1]) != nc_file) {
+      file.rename(files[1], nc_file)
+    }
+  }
+  
+  # Load the NetCDF file
+  wind_v_raw <- rast(nc_file)
+  
+  
+  # Define the time sequence
+  time_points <- seq(from = start_date, to = end_date, by = "hour")
+  terra::time(wind_v_raw) <- time_points
 
 ################
 # Download soil moisture raster
 ###############
 request <- list(
-  dataset_short_name = "reanalysis-era5-single-levels",
-  product_type = "reanalysis",
-  variable = "volumetric_soil_water_layer_1",
-  year = year,
-  month = months,
-  day = days,  
-  time = times, 
-  area = area, 
-  format = "netcdf",
-  target = "era5_soil_moisture_2018.nc"
-)
-
-file_path <- wf_request(
-  request = request,
-  transfer = TRUE,   
-  path = "."         
-)
-
-soil_raw <- rast("era5_soil_moisture_2018.nc")
-
-time_points <- seq(from = start_date, to = end_date, by = "hour")
-
-terra::time(soil_raw) <- time_points
-
+    dataset_short_name = "reanalysis-era5-land",
+    product_type = "reanalysis",
+    variable = "volumetric_soil_water_layer_1",
+    year = year,
+    month = months,
+    day = days,  
+    time = times, 
+    area = area, 
+    format = "netcdf",
+    target = paste0("era5_soil_moisture_land_", year, ".nc")
+  )
+  
+  file_path <- wf_request(
+    request = request,
+    transfer = TRUE,   
+    path = "."         
+  )
+  
+  #unzip the file
+  nc_file <- paste0("era5_soil_moisture_land_", year, ".nc")
+  zip_file <- paste0("era5_soil_moisture_land_", year,".zip")
+  
+  if (!file.exists(nc_file)) {
+    # Unzip and get the list of extracted files
+    files <- unzip(zip_file, exdir = ".")
+    # Rename the first extracted file to your desired name if needed
+    if (basename(files[1]) != nc_file) {
+      file.rename(files[1], nc_file)
+    }
+  }
+  
+  # Load the NetCDF file
+  soil_raw <- rast(nc_file)
+  
+  
+  # Define the time sequence
+  time_points <- seq(from = start_date, to = end_date, by = "hour")
+  terra::time(soil_raw) <- time_points
 
 ################
 # Download snow depth raster
 ###############
 request <- list(
-  dataset_short_name = "reanalysis-era5-single-levels",
-  product_type = "reanalysis",
-  variable = "snow_depth",
-  year = year,
-  month = snowmonth,
-  day = days,  
-  time = times, 
-  area = area, 
-  format = "netcdf",
-  target = "era5_snow_depth_2018.nc"
-)
-
-file_path <- wf_request(
-  request = request,
-  transfer = TRUE,   
-  path = "."         
-)
-
-snow_raw <- rast("era5_snow_depth_2018.nc")
-
-time_points <- seq(from = start_date, to = snow_melt_end, by = "hour")
-
-terra::time(snow_raw) <- time_points
+    dataset_short_name = "reanalysis-era5-land",
+    product_type = "reanalysis",
+    variable = "snow_depth",
+    year = year,
+    month = snowmonth,
+    day = days,  
+    time = times, 
+    area = area, 
+    format = "netcdf",
+    target = paste0("era5_snow_depth_land_", year, ".nc")
+  )
+  
+  file_path <- wf_request(
+    request = request,
+    transfer = TRUE,   
+    path = "."        
+  )
+  
+  #unzip the file
+  nc_file <- paste0("era5_snow_depth_land_", year, ".nc")
+  zip_file <- paste0("era5_snow_depth_land_", year,".zip")
+  
+  if (!file.exists(nc_file)) {
+    # Unzip and get the list of extracted files
+    files <- unzip(zip_file, exdir = ".")
+    # Rename the first extracted file to your desired name if needed
+    if (basename(files[1]) != nc_file) {
+      file.rename(files[1], nc_file)
+    }
+  }
+  
+  # Load the NetCDF file
+  snow_raw <- rast(nc_file)
+  
+  # Define the time sequence
+  time_points <- seq(from = snow_start_date, to = snow_melt_end, by = "hour")
+  terra::time(snow_raw) <- time_points
 
 
 ################
 # Download precipitation raster
 ###############
 request <- list(
-  dataset_short_name = "reanalysis-era5-single-levels",
-  product_type = "reanalysis",
-  variable = "total_precipitation",
-  year = year,
-  month = precipmonth,
-  day = days,  
-  time = times, 
-  area = area, 
-  format = "netcdf",
-  target = "era5_total_precipitation_2018.nc"
-)
-
-file_path <- wf_request(
-  request = request,
-  transfer = TRUE,   
-  path = "."         
-)
-
-precip_raw <- rast("era5_total_precipitation_2018.nc")
-
-time_points <- seq(from = precipitation_start, to = end_date, by = "hour")
-
-terra::time(precip_raw) <- time_points
+    dataset_short_name = "reanalysis-era5-land",
+    product_type = "reanalysis",
+    variable = "total_precipitation",
+    year = year,
+    month = precipmonth,
+    day = days,  
+    time = times, 
+    area = area, 
+    format = "netcdf",
+    target = paste0("era5_total_precipitation_land_", year, ".nc")
+  )
+  
+  file_path <- wf_request(
+    request = request,
+    transfer = TRUE,   
+    path = "."         
+  )
+  
+  #unzip the file
+  nc_file <- paste0("era5_total_precipitation_land_", year, ".nc")
+  zip_file <- paste0("era5_total_precipitation_land_", year,".zip")
+  
+  if (!file.exists(nc_file)) {
+    # Unzip and get the list of extracted files
+    files <- unzip(zip_file, exdir = ".")
+    # Rename the first extracted file to your desired name if needed
+    if (basename(files[1]) != nc_file) {
+      file.rename(files[1], nc_file)
+    }
+  }
+  
+  # Load the NetCDF file
+  precip_raw <- rast(nc_file)
+  
+  # Define the time sequence
+  time_points <- seq(from = precipitation_start, to = end_date, by = "hour")
+  terra::time(precip_raw) <- time_points
+  
+  
+  
 
 
 # Check the rasters loaded correctly
