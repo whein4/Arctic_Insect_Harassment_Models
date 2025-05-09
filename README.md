@@ -8,13 +8,13 @@ The process is outlined below:
  Step 1: Downloading ERA5 rasters 
    - Download the required predictors for both the CHT mosquito and oestrid fly models from ERA5.
        - Mosquito Model predictors and ERA5 source variable:
-            temperature = 2m_temperature
-            wind speed = 10m_u_component_of_wind and 10m_v_component_of_wind
-            2 week sum of precipitation = total_precipitation
-            days since snow melt = snow_depth
+            temperature = 2m_temperature,
+            wind speed = 10m_u_component_of_wind and 10m_v_component_of_wind,
+            2 week sum of precipitation = total_precipitation,
+            days since snow melt = snow_depth,
             soil moisture = volumetric_soil_water_layer_1
         - Oestrid Model:
-            temperature = 2m_temperature
+            temperature = 2m_temperature,
             cumulative growing degree day = 2m_temperature
    - Pull directly from the ERA5 online data store (open access; cds.climate.copernicus.eu) into R
  Step 2: Manipulate ERA5 rasters
