@@ -42,11 +42,11 @@ The process is outlined below:
 
 
 For additional information on working with multidimensional rasters please refer to:
-Introduction to Working with Raster Data in R: https://www.neonscience.org/resources/learning-hub/tutorials/introduction-working-raster-data-r
-R for Spatial Statistics: https://gsp.humboldt.edu/olm/R/03_03_RasterFiles_Terra.html
-Introduction to Geospatial Raster and Vector Data with R: https://ucsb-dreamlab.github.io/r-raster-vector-geospatial/05-raster-multi-band-in-r.html
-Advanced tools for raster data in R: https://mhallwor.github.io/_pages/advanced_Rasters
-Spatial analysis with R: https://rfrelat.github.io/Spatial2_MultiExamples.html
+- Introduction to Working with Raster Data in R: https://www.neonscience.org/resources/learning-hub/tutorials/introduction-working-raster-data-r
+- R for Spatial Statistics: https://gsp.humboldt.edu/olm/R/03_03_RasterFiles_Terra.html
+- Introduction to Geospatial Raster and Vector Data with R: https://ucsb-dreamlab.github.io/r-raster-vector-geospatial/05-raster-multi-band-in-r.html
+- Advanced tools for raster data in R: https://mhallwor.github.io/_pages/advanced_Rasters
+- Spatial analysis with R: https://rfrelat.github.io/Spatial2_MultiExamples.html
 
 For questions about CHT insect indices and their prediction using the code provided in this repository contact me at william.hein@mail.mcgill.ca
 
