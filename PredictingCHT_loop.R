@@ -504,7 +504,7 @@ for (year in years) {
   #######################################################################################
   #load TPI
   ######################################################################################
-  tpi_raster <- rast("summerrangeTPI.tif")
+  tpi_raster <- rast("TPI_5km_raster.tif")
   #Plot 5km TPI raster
   plot(tpi_raster)
   
