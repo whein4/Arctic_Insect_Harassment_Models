@@ -456,7 +456,7 @@ for (year in years) {
   print(first_melt_layer)
   
   # Define the start and end dates
-  start_date <- as.Date(paste0(year, "-05-31"))
+  start_date <- as.Date(paste0(year, "-05-01"))
   end_date <- as.Date(paste0(year, "-08-31"))
   all_dates <- seq(start_date, end_date, by = "day")
   num_days <- length(all_dates)
