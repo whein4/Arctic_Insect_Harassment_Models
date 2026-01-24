@@ -1,7 +1,7 @@
 # Arctic_Insect_Harassment_Models
 Repository containing mosquito and oestrid fly harassment models and instructions for their use in calculating the CHT insect indices described in Hein et al., 2025.
 
-Attached in this repository are the the .rds files containing the mosquito and oestrid fly models descridbed in Hein et al., 2025. These models can be used to predict insect harassment by mosquitoes and oestrid fly harassment in arctic ecosystems remotely using a trusted DSM and open source ERA5 land weather model variables. We provide code to predict a single year's hourly or daily insect harassment using the CHT indices in PredictingCHT_basecode.R as well as code to predict multiple years for hindcasting analysis (predicting daily) in PredictingCHT_loop.R.
+Attached in this repository are the the .rds files containing the mosquito and oestrid fly models descridbed in Hein et al., 2026. These models can be used to predict insect harassment by mosquitoes and oestrid fly harassment in arctic ecosystems remotely using a trusted DSM and open source ERA5 land weather model variables. We provide code to predict a single year's hourly or daily insect harassment using the CHT indices in PredictingCHT_basecode.R as well as code to predict multiple years for hindcasting analysis (predicting daily) in PredictingCHT_loop.R.
 
 The process is outlined below:
 
