@@ -57,7 +57,7 @@ library(progressr)
 # Loop
 ##################################################################################
 
-# Run on R version R version 4.4.2
+# Run on R version 4.4.2
 
 # Select years to process (years <- as.character(seq(1950, 2024, by = 1)))
 # Set your ERA5 key (https://cds.climate.copernicus.eu/profile)
@@ -839,6 +839,7 @@ for (year in years) {
   # Garbage collection to free memory
   gc()
 }
+
 
 
 
