@@ -1049,15 +1049,18 @@ prediction_raster_mosq <- terra::rast(predictors_mosq$ERAtemp)
 # Populate blank  with NAs to be filled in with predictions
 terra::values(prediction_raster_mosq) <- NA 
 
-# Assign predicted values back to the raster (match indices)
-all_indices <- seq_len(ncell(prediction_raster_mosq))
-valid_indices <- which(!is.na(terra::values(predictors_mosq$ERAtemp)))
-terra::values(prediction_raster_mosq)[valid_indices] <- predicted_values_mosq_index
-
-# View the result
-print(prediction_raster_mosq)
-min(prediction_raster_mosq)
-max(prediction_raster_mosq)
+    # Write values sequentially:
+    # layer 1 row-wise -> layer 2 -> layer 3 ...
+    vals <- terra::values(prediction_raster_mosq)
+    vals[seq_along(predicted_values_mosq_index)] <- predicted_values_mosq_index
+    terra::values(prediction_raster_mosq) <- vals
+    
+    # View or save the result
+    print(prediction_raster_mosq)
+    min(prediction_raster_mosq)
+    max(prediction_raster_mosq)
+    plot(prediction_raster_mosq)
+    
 
 ############################################################################
 # Predict oestrid harassment
@@ -1090,15 +1093,15 @@ prediction_raster_oest <- terra::rast(predictors_oest$ERAtemp)
 # Populate blank  with NAs to be filled in with predictions
 terra::values(prediction_raster_oest) <- NA 
 
-# Assign predicted values back to the raster (match indices)
-all_indices <- seq_len(ncell(prediction_raster_oest))
-valid_indices <- which(!is.na(terra::values(predictors_oest$ERAtemp)))
-terra::values(prediction_raster_oest)[valid_indices] <- predicted_values_oest_sq
-
-# View  the result
-print(prediction_raster_oest)
-min(prediction_raster_oest)
-max(prediction_raster_oest)
+    # Write values sequentially:
+    # layer 1 row-wise -> layer 2 -> layer 3 ...
+    vals <- terra::values(prediction_raster_oest)
+    vals[seq_along(predicted_values_oest_sq)] <- predicted_values_oest_sq
+    terra::values(prediction_raster_oest) <- vals
+    
+    # View or save the result
+    print(prediction_raster_oest)
+    plot(prediction_raster_oest)
 
 
 # Save the resulting predicted rasters
@@ -1284,6 +1287,7 @@ server <- function(input, output, session) {
 
 # Run the app
 shinyApp(ui = ui, server = server)
+
 
 
 
